@@ -1,6 +1,7 @@
 class TTT:
     gamestate = [-1]*9
     marks = ["-"]*9
+    win = False
 
     def to_state(self):
         gamestate = []
@@ -57,7 +58,9 @@ class TTT:
     def calculate_win(self):
         paths = []
         temp = []
-        win = 0
+        win = False
+        winner = {}
+        
         #convert into 3x3
         for i in 0, 3, 6:
             temp.append(self.gamestate[i:i + 3])
@@ -69,13 +72,17 @@ class TTT:
             if set(r) != {-1}:
                 print(len(set(r)))
                 if len(set(r)) == 1:
-                    win += 1
+                    win = True
+                    winner = set(r)
         #check diag
         diag = []
         for i in 0, 1, 2:
             diag.append(temp[i][i])
         if set(diag) != {-1}:
             print(len(set(diag)))
+            if len(set(diag)) == 1:
+                win = True
+                winner = set(diag)
         paths.append(diag)#########################
         #rotate and check "across" (down up)
         #temp = list(zip(*temp[::-1]))
@@ -85,19 +92,26 @@ class TTT:
             paths.append(r)
             if set(r) != {-1}:
                 print(len(set(r)))
+                if len(set(r)) == 1:
+                    win = True
+                    winner = set(r)
         #check diag
         diag = []
         for i in 0, 1, 2:
             diag.append(temp[i][i])
         if set(diag) != {-1}:
             print(len(set(diag)))
+            if len(set(diag)) == 1:
+                win = True
+                winner = set(diag)
         paths.append(diag)#########################
         print(paths)
-        print(win)
+        self.win = win
+        return win, winner
 
     def run(self):
         choice = ""
-        while choice != "q":
+        while choice != "q" and self.win is False:
             print(self)
 
             choice = input("input:")
@@ -108,6 +122,11 @@ class TTT:
 
             self.marks[choice_pos] = choice_val
             self.to_state()
+
+            if self.calculate_win()[0]:
+                print(list(self.calculate_win()[1]))
+
+
 #ttt.run()            
 
 
@@ -135,7 +154,7 @@ print(ttt.marks) """
 
 ttt = TTT([1, 1, 0, 0, 0, 0, -1, -1, -1])
 #ttt.run()
-print(ttt)
+#print(ttt)
 
 
 #print(len(set(ttt.gamestate)))
