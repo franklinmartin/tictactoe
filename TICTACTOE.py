@@ -145,9 +145,9 @@ class TTT:
         if value == "-":
             return -1
         
-    def check(self, input):
-        if input != ("X" or "O"):
-            return False
+    def check(self,choice_pos, choice_val):
+        if (choice_pos >= 1 or choice_pos <= 8) and (choice_val == "X" or choice_val == "O"):
+            return True
         
     def run(self):
         choice = ""
@@ -162,8 +162,9 @@ class TTT:
             choice_pos = int(choice[0]) - 1
             choice_val = choice[1]
 
-            self.marks[choice_pos] = choice_val
-            self.to_state()
+            if (self.check(choice_pos, choice_val)):
+                self.marks[choice_pos] = choice_val
+                self.to_state()
 
             calc_win = self.calculate_win()
             paths = calc_win[2]
@@ -177,5 +178,5 @@ class TTT:
 """             if calc_win[0]:
                 print(self.convert(list(calc_win[1])[0])) """
 
-ttt = TTT([1, 1, 0, 0, 0, 0, -1, -1, -1])
+ttt = TTT([1, 1, 0, 0, 1, 0, -1, -1, -1])
 ttt.run()
