@@ -107,7 +107,18 @@ class TTT:
         paths.append(diag)#########################
         print(paths)
         self.win = win
-        return win, winner
+        return win, winner, paths
+
+    def check_path(self, paths):
+        paths = list(paths)
+        temp = []
+        hold = []
+        for i in range(0, len(paths)):
+            if len(set(paths[i])) > 1:
+                for j in range(0, 2):
+                    if((paths[i][j] == paths[i][j%3])):
+                        temp.append(paths[i])
+        return temp
 
     def convert(self, value):
         if value == 1:
@@ -143,8 +154,12 @@ class TTT:
             self.marks[choice_pos] = choice_val
             self.to_state()
 
-            if self.calculate_win()[0]:
-                print(self.convert(list(self.calculate_win()[1])[0]))
+            calc_win = self.calculate_win()
+            paths = calc_win[2]
+            print(self.check_path(paths))
+
+"""             if calc_win[0]:
+                print(self.convert(list(calc_win[1])[0])) """
 
 ttt = TTT([1, 1, 0, 0, 0, 0, -1, -1, -1])
 ttt.run()
