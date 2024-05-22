@@ -109,11 +109,31 @@ class TTT:
         self.win = win
         return win, winner
 
+    def convert(self, value):
+        if value == 1:
+            return "X"
+        if value == 0:
+            return "O"
+        if value == -1:
+            return "-"
+        if value == "X":
+            return 1
+        if value == "O":
+            return 0
+        if value == "-":
+            return -1
+        
+    def check(self, input):
+        if input != ("X" or "O"):
+            return False
+        
     def run(self):
         choice = ""
         while choice != "q" and self.win is False:
+            print("Enter position and value:")
+            print("\n example: 1 X")
+            print(" example: 9 O")
             print(self)
-
             choice = input("input:")
 
             choice = choice.split()
@@ -124,7 +144,7 @@ class TTT:
             self.to_state()
 
             if self.calculate_win()[0]:
-                print(list(self.calculate_win()[1]))
+                print(self.convert(list(self.calculate_win()[1])[0]))
 
 
 #ttt.run()            
@@ -164,4 +184,4 @@ ttt = TTT([1, 1, 0, 0, 0, 0, -1, -1, -1])
 #matrix = [[ttt.gamestate[i] for i in range(0, 3)] for j in range(0, 3)] 
 #print(matrix)
 
-ttt.run()
+#ttt.run()
