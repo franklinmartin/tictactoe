@@ -54,7 +54,7 @@ class TTT:
                 gamestate.append(int(c))
         return cls(gamestate)
     
-    #way too hardcoded
+    #way too hardcoded too convoluted
     def calculate_win(self):
         paths = []
         temp = []
@@ -64,13 +64,13 @@ class TTT:
         #convert into 3x3
         for i in 0, 3, 6:
             temp.append(self.gamestate[i:i + 3])
-        print(temp)
+        #print(temp)
 
         #check across
         for r in temp:
             paths.append(r)######################
             if set(r) != {-1}:
-                print(len(set(r)))
+                #print(len(set(r)))
                 if len(set(r)) == 1:
                     win = True
                     winner = set(r)
@@ -79,7 +79,7 @@ class TTT:
         for i in 0, 1, 2:
             diag.append(temp[i][i])
         if set(diag) != {-1}:
-            print(len(set(diag)))
+            #print(len(set(diag)))
             if len(set(diag)) == 1:
                 win = True
                 winner = set(diag)
@@ -91,7 +91,7 @@ class TTT:
         for r in temp:
             paths.append(r)
             if set(r) != {-1}:
-                print(len(set(r)))
+                #print(len(set(r)))
                 if len(set(r)) == 1:
                     win = True
                     winner = set(r)
@@ -100,12 +100,12 @@ class TTT:
         for i in 0, 1, 2:
             diag.append(temp[i][i])
         if set(diag) != {-1}:
-            print(len(set(diag)))
+            #print(len(set(diag)))
             if len(set(diag)) == 1:
                 win = True
                 winner = set(diag)
         paths.append(diag)#########################
-        print(paths)
+        #print(paths)
         self.win = win
         return win, winner, paths
 
@@ -115,18 +115,22 @@ class TTT:
                 return True
         return False
     
+    #finds the double collisions
+    #i.e. 110 101 010 11- 00- . . .
     def check_path(self, paths):
         paths = list(paths)
         temp = []
         hold = []
+        pos = []
         for i in range(0, len(paths)):
             if len(set(paths[i])) > 1:
                 for j in range(0, 2):
                     if(paths[i][j] == paths[i][j+1] or paths[i][j] == paths[i][j-1]):
                         if(self.check_contained(temp, paths[i]) == False):
                             temp.append(paths[i])
-        return temp
-
+                            pos.append([i, j])
+        return temp, pos
+    #check_path returns position: 
     def convert(self, value):
         if value == 1:
             return "X"
@@ -163,7 +167,12 @@ class TTT:
 
             calc_win = self.calculate_win()
             paths = calc_win[2]
+            double_col = self.check_path(paths)
+            double_col_pos = double_col[1]
+            #print(paths[double_col_pos[4][0] + double_col_pos[4][1]])
             print(self.check_path(paths))
+
+            
 
 """             if calc_win[0]:
                 print(self.convert(list(calc_win[1])[0])) """
