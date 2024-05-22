@@ -52,7 +52,48 @@ class TTT:
             if c.isnumeric():
                 gamestate.append(int(c))
         return cls(gamestate)
+    
+    #way too hardcoded
+    def calculate_win(self):
+        paths = []
+        temp = []
+        win = 0
+        #convert into 3x3
+        for i in 0, 3, 6:
+            temp.append(self.gamestate[i:i + 3])
+        print(temp)
 
+        #check across
+        for r in temp:
+            paths.append(r)######################
+            if set(r) != {-1}:
+                print(len(set(r)))
+                if len(set(r)) == 1:
+                    win += 1
+        #check diag
+        diag = []
+        for i in 0, 1, 2:
+            diag.append(temp[i][i])
+        if set(diag) != {-1}:
+            print(len(set(diag)))
+        paths.append(diag)#########################
+        #rotate and check "across" (down up)
+        #temp = list(zip(*temp[::-1]))
+        #rotate and turn 
+        temp = list(list(a) for a in zip(*temp[::-1]))
+        for r in temp:
+            paths.append(r)
+            if set(r) != {-1}:
+                print(len(set(r)))
+        #check diag
+        diag = []
+        for i in 0, 1, 2:
+            diag.append(temp[i][i])
+        if set(diag) != {-1}:
+            print(len(set(diag)))
+        paths.append(diag)#########################
+        print(paths)
+        print(win)
 
     def run(self):
         choice = ""
@@ -104,41 +145,4 @@ print(ttt)
 #matrix = [[ttt.gamestate[i] for i in range(0, 3)] for j in range(0, 3)] 
 #print(matrix)
 
-paths = []
-
-temp = []
-#convert into 3x3
-for i in 0, 3, 6:
-    temp.append(ttt.gamestate[i:i + 3])
-print(temp)
-
-#check across
-for r in temp:
-    paths.append(r)######################
-    if set(r) != {-1}:
-        print(len(set(r)))
-#check diag
-diag = []
-for i in 0, 1, 2:
-    diag.append(temp[i][i])
-if set(diag) != {-1}:
-    print(len(set(diag)))
-paths.append(diag)#########################
-#rotate and check "across" (down up)
-#temp = list(zip(*temp[::-1]))
-temp = list(list(a) for a in zip(*temp[::-1]))
-for r in temp:
-    paths.append(r)
-    if set(r) != {-1}:
-        print(len(set(r)))
-#check diag
-diag = []
-for i in 0, 1, 2:
-    diag.append(temp[i][i])
-if set(diag) != {-1}:
-    print(len(set(diag)))
-paths.append(diag)#########################
-print(paths)
-
-
-
+ttt.run()
