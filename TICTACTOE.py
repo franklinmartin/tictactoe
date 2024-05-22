@@ -146,42 +146,5 @@ class TTT:
             if self.calculate_win()[0]:
                 print(self.convert(list(self.calculate_win()[1])[0]))
 
-
-#ttt.run()            
-
-
-#gamestate = [-1]*9
-#print(ttt.gamestate)
-#print(len(ttt))
-#print(ttt.to_marks())
-#print(ttt)
-
-#ttt = TTT.from_str("")
-
-
-#print(ttt)
-#print(ttt.to_marks())
-#print(TTT.marks)
-
-
-""" ttt = TTT.from_str("0 0 0 0 0 0 0 0 0")
-print(ttt.gamestate)
-print(ttt.marks)
-
-ttt = TTT([-1]*9)
-print(ttt.gamestate)
-print(ttt.marks) """
-
 ttt = TTT([1, 1, 0, 0, 0, 0, -1, -1, -1])
-#ttt.run()
-#print(ttt)
-
-
-#print(len(set(ttt.gamestate)))
-
-
-#matrix = [[i + j for i in range(1, 4)] for j in range(0, 9, 3)] 
-#matrix = [[ttt.gamestate[i] for i in range(0, 3)] for j in range(0, 3)] 
-#print(matrix)
-
-#ttt.run()
+ttt.run()
