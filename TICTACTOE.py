@@ -109,6 +109,12 @@ class TTT:
         self.win = win
         return win, winner, paths
 
+    def check_contained(self, container, path):
+        for p in container:
+            if path in container:
+                return True
+        return False
+    
     def check_path(self, paths):
         paths = list(paths)
         temp = []
@@ -116,8 +122,9 @@ class TTT:
         for i in range(0, len(paths)):
             if len(set(paths[i])) > 1:
                 for j in range(0, 2):
-                    if((paths[i][j] == paths[i][j%3])):
-                        temp.append(paths[i])
+                    if(paths[i][j] == paths[i][j+1] or paths[i][j] == paths[i][j-1]):
+                        if(self.check_contained(temp, paths[i]) == False):
+                            temp.append(paths[i])
         return temp
 
     def convert(self, value):
